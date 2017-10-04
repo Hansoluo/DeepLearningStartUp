@@ -14,18 +14,18 @@ from zhon.hanzi import punctuation
 
 basedir = os.path.abspath(os.path.dirname(__file__))
 file_dir = os.path.join(basedir, 'happiness_seg.txt')
-with open(file_dir, 'r', encoding = 'utf8') as f:  # 打开并读取txt文件
+with open(file_dir, 'r', encoding = 'utf8') as f:
     text = f.read()
-line1 = re.sub('― ―', '', text)  # 对文本进行清洗，去掉多余的字符'― ―'（采用re）
-line2 = re.split(r'[{}]'.format(punctuation), line1)  # 按照中文符号分割文本
+line1 = re.sub('― ―', '', text)
+line2 = re.split(r'[{}]'.format(punctuation), line1)
 a = []
-for item in line2:  # item 为按中文符号分割后的单个文本
-    phrases = item.split()  # word 为按单个文本中的空格分割出的词组列表
+for item in line2:
+    phrases = item.split()
     for i in range(len(phrases)-1):
-        binary_phrases = phrases[i] + " " + phrases[i+1]  # 连接为二元词组
-        a.append(binary_phrases)  # 保存到列表
+        binary_phrases = phrases[i] + " " + phrases[i+1]
+        a.append(binary_phrases)
 
-print(Counter(a).most_common(10))  # 统计列表中相同元素的频率并输出前十个最高的
+print(Counter(a).most_common(10))
 
 # 错误的方法——re方法，没办法把"今天 天气 不错"分割成两个二元词组
 # words = re.findall(r'\w+\s\w+', open(file_dir, 'r', encoding = 'utf8').read())
